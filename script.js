@@ -1,19 +1,15 @@
-// Language switching functionality
 let currentLang = 'en';
 
 function switchLanguage(lang) {
     currentLang = lang;
 
-    // Update button states
     document.querySelectorAll('.lang-btn').forEach(btn => {
         btn.classList.remove('active');
     });
     document.getElementById(`lang-${lang}`).classList.add('active');
 
-    // Update all elements with data-en and data-pt attributes
     document.querySelectorAll('[data-en]').forEach(element => {
         if (element.hasAttribute('data-pt-only')) {
-            // Special handling for PT-only paragraphs
             element.style.display = lang === 'pt' ? 'block' : 'none';
         } else {
             const text = element.getAttribute(`data-${lang}`);
@@ -23,21 +19,17 @@ function switchLanguage(lang) {
         }
     });
 
-    // Update HTML lang attribute
     document.documentElement.lang = lang === 'en' ? 'en' : 'pt-br';
 
-    // Save preference to localStorage
     localStorage.setItem('preferredLanguage', lang);
 }
 
-// Load saved language preference on page load
 document.addEventListener('DOMContentLoaded', () => {
     const savedLang = localStorage.getItem('preferredLanguage') || 'en';
     if (savedLang !== 'en') {
         switchLanguage(savedLang);
     }
 
-    // Add smooth scroll behavior for better UX
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
@@ -51,7 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Add intersection observer for fade-in animations
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -100px 0px'
@@ -66,7 +57,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }, observerOptions);
 
-    // Observe all sections for animation
     document.querySelectorAll('section').forEach(section => {
         section.style.opacity = '0';
         section.style.transform = 'translateY(30px)';
@@ -74,7 +64,6 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(section);
     });
 
-    // Header is always visible
     document.querySelector('.header').style.opacity = '1';
     document.querySelector('.header').style.transform = 'translateY(0)';
 });
